@@ -8,8 +8,8 @@ function Projects() {
     <div className="pt-[100px] text-center">
       <h1 className="text-4xl">Important Projects</h1>
       <div className="h-full py-10 grid lg:grid-cols-2 xs:grid-cols-1 gap-10">
-        {projects?.map((project: any) => (
-          <div className="h-full">
+        {projects?.map((project: any, idx: number) => (
+          <div className="h-full" key={idx}>
             <PinContainer
               title={project?.title}
               href={project?.href}
@@ -41,8 +41,8 @@ function Projects() {
       <div className="py-4">
         <h1 className="text-4xl">Github Projects</h1>
         <div className="py-6 px-6 grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-2 ">
-          {githubProjects?.map((project) => (
-            <div style={{ margin: "10px auto" }}>
+          {githubProjects?.map((project, idx) => (
+            <div style={{ margin: "10px auto" }} key={idx}>
               <Meteors
                 name={project?.title}
                 link={project?.href}

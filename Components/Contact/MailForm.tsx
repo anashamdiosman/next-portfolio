@@ -70,7 +70,7 @@ function MailForm() {
 
   return (
     <div>
-      <h4 className="text-2xl text-center mb-6">Let's get in touch</h4>
+      <h4 className="text-2xl text-center mb-6">Let&apos;s get in touch</h4>
       <form
         className="p-4 bg-zinc-900 rounded-lg shadow-2xl shadow-indigo-500/20"
         onSubmit={(e) => handleSubmitContactForm(e)}

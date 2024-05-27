@@ -52,8 +52,8 @@ export const HoverEffect = ({
           <Card>
             <CardTitle>{item.title}</CardTitle>
             <div className="flex gap-1 flex-wrap">
-              {item?.labels?.map((label) => (
-                <CardDescription>{label}</CardDescription>
+              {item?.labels?.map((label, idx) => (
+                <CardDescription key={idx}>{label}</CardDescription>
               ))}
             </div>
           </Card>
@@ -99,9 +99,11 @@ export const CardTitle = ({
 export const CardDescription = ({
   className,
   children,
+  key,
 }: {
   className?: string;
   children: React.ReactNode;
+  key: number;
 }) => {
   return (
     <p
@@ -109,6 +111,7 @@ export const CardDescription = ({
         "mt-8 text-[#fff] font-bold tracking-wide leading-relaxed text-sm bg-slate-800/[0.8] rounded-md px-3 py-2 cursor-pointer",
         className
       )}
+      key={key}
     >
       {children}
     </p>

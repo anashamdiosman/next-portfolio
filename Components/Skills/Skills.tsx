@@ -9,8 +9,8 @@ function Skills() {
     <div className="pt-[100px]">
       <h1 className="text-center text-4xl">Important Skills</h1>
       <div className="flex justify-center items-center gap-20 py-10">
-        {mainSkills?.map((skill: any) => (
-          <div>
+        {mainSkills?.map((skill: any, idx) => (
+          <div key={idx}>
             {skill?.image ? (
               <Image
                 src={skill?.image}
