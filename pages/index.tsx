@@ -10,7 +10,9 @@ import {
   animateScroll as scroll,
   scrollSpy,
 } from "react-scroll";
-import About from "@/Components/About/About";
+import Projects from "@/Components/Projects/Projects";
+import Skills from "@/Components/Skills/Skills";
+import Contact from "@/Components/Contact/Contact";
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 
@@ -22,10 +24,13 @@ export default function Home() {
         <Banner />
       </Element>
       <Element name="section2" className="element">
-        {/* <About /> */}
+        <Projects />
       </Element>
       <Element name="section3" className="element">
-        <div className="h-screen">Projects section</div>
+        <Skills />
+      </Element>
+      <Element name="section4" className="element">
+        <Contact />
       </Element>
     </main>
   );
@@ -67,9 +72,9 @@ const tabs: any = [
   },
   {
     id: "4",
-    name: "socials",
-    href: "#socials",
-    label: "Socials",
+    name: "contact",
+    href: "#contact",
+    label: "Contact",
     section: "section4",
     classNameUnActive: `${anchorsClassNames?.nonActive}`,
     classNameActive: `${anchorsClassNames?.active}`,

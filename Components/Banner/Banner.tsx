@@ -8,7 +8,7 @@ function Banner() {
     <div
       className="h-screen w-screen"
       style={{
-        background: `linear-gradient(180deg, rgba(1,1,2,0.4) 0%, rgba(1,1,2,0.9) 86%), url("/assets/banner.jpg") center center / cover no-repeat`,
+        background: `linear-gradient(180deg, rgba(1,1,2,0.4) 0%, rgba(8,11,18,1) 86%), url("/assets/banner.jpg") center center / cover no-repeat`,
         width: "100%",
       }}
     >
