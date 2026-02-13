@@ -82,6 +82,7 @@ const otherSkills = [
     link: "DSADASS",
     labels: [
       "Node.js",
+      "Nest.js",
       "PHP",
       "Sequelize.js",
       "Express.js",

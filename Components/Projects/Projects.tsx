@@ -7,7 +7,7 @@ function Projects() {
   return (
     <div className="pt-[100px] text-center">
       <h1 className="text-4xl">Important Projects</h1>
-      <div className="h-full py-10 grid lg:grid-cols-2 xs:grid-cols-1 gap-10">
+      <div className="h-full py-10 grid lg:grid-cols-3 xs:grid-cols-1 gap-10">
         {projects?.map((project: any, idx: number) => (
           <div className="h-full" key={idx}>
             <PinContainer
@@ -65,6 +65,13 @@ const projects = [
     image: "/assets/projects/jadwelny.jpg",
     description:
       "Jadwelny - AI-powered travel booking platform that aims to make travel easy and stress-free.",
+  },
+  {
+    title: "BYDI Student Portal",
+    href: "https://studentmob.binyaber.com",
+    image: "/assets/projects/bydi.jpg",
+    description:
+      "A student portal for booking and managing classes, and schedules through a simple, user-friendly interface.",
   },
   {
     title: "WinnerX",

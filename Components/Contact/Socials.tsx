@@ -19,9 +19,11 @@ function Socials() {
       <div>
         <h4 className="text-2xl py-6">About Me</h4>
         <p className="text-zinc-400">
-          Experienced Software Developer with over two years of intensive
-          experience in Full-Stack development, primarily focusing on Node.js
-          and React.js technologies using MERN stack.
+          Experienced software developer with almost five years of intensive
+          experience in front-end and back-end development. Primarily focused on
+          using the MERN stack, specializing in Node.js, Next.js, and React.js
+          technologies. Proficient in building robust, scalable applications
+          that enhance user engagement and streamline business processes.
         </p>
         <button
           className="flex items-center gap-5 mt-6 border-[1px] border-zinc-500 rounded-lg p-4 hover:bg-zinc-500 hover:shadow-2xl hover:shadow-indigo-500/20  duration-300"
@@ -35,8 +37,28 @@ function Socials() {
       <div>
         <h4 className="text-2xl">Socials</h4>
         <div className="py-2 flex  items-center gap-2">
-          <FaLinkedin fontSize={30} className="cursor-pointer" />
-          <FaGithub fontSize={30} />
+          <FaLinkedin
+            fontSize={30}
+            className="cursor-pointer"
+            onClick={() =>
+              window.open(
+                "https://www.linkedin.com/in/anas-el-tom/",
+                "_blank",
+                "noopener,noreferrer",
+              )
+            }
+          />
+          <FaGithub
+            fontSize={30}
+            className="cursor-pointer"
+            onClick={() =>
+              window.open(
+                "https://github.com/anashamdiosman",
+                "_blank",
+                "noopener,noreferrer",
+              )
+            }
+          />
         </div>
       </div>
     </div>
