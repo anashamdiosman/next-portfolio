@@ -141,7 +141,7 @@ export default function HifzyPrivacyPolicy() {
                 href="mailto:anas-el-tom@live.com"
                 className="break-all text-amber-300 underline decoration-amber-300/40 underline-offset-4 hover:text-amber-200"
               >
-                anas-el-tom@live.com
+                techytomm.dev@gmail.com
               </a>
               .
             </p>
