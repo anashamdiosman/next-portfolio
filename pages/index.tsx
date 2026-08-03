@@ -1,4 +1,5 @@
 import Image from "next/image";
+import NextLink from "next/link";
 import { Roboto_Mono } from "next/font/google";
 import NavBar from "@/Components/NavBar/NavBar";
 import Banner from "@/Components/Banner/Banner";
@@ -32,6 +33,14 @@ export default function Home() {
       <Element name="section4" className="element">
         <Contact />
       </Element>
+      <footer className="border-t border-white/10 bg-gray-950 px-6 py-8 text-center text-sm text-zinc-400">
+        <NextLink
+          href="/hifzy/privacy"
+          className="transition-colors hover:text-amber-300"
+        >
+          Hifzy Privacy Policy
+        </NextLink>
+      </footer>
     </main>
   );
 }
