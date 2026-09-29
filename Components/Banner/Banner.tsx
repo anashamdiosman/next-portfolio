@@ -82,7 +82,7 @@ function Banner() {
               <h2 className="text-zinc-800 text-xl sm:text-2xl italic">
                 <Typewriter
                   words={[
-                    "A software developer specializing in React, Node.js, and Next.js.",
+                    "A software engineer specializing in React, Node.js, and Next.js.",
                   ]}
                   cursor
                   cursorStyle="|"

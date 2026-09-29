@@ -19,7 +19,7 @@ function Socials() {
       <div>
         <h4 className="text-2xl py-6">About Me</h4>
         <p className="text-zinc-400">
-          Experienced software developer with almost five years of intensive
+          Experienced software engineer with almost five years of intensive
           experience in front-end and back-end development. Primarily focused on
           using the MERN stack, specializing in Node.js, Next.js, and React.js
           technologies. Proficient in building robust, scalable applications

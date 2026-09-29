@@ -3,15 +3,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import nodemailer from "nodemailer";
 
-const { EMAIL, EMAIL_PASS } = process?.env;
+const { EMAIL, EMAIL_PASS, EMAIL_HOST } = process?.env;
 
+// Hostinger SMTP: SSL on port 465
 const transporter = nodemailer?.createTransport({
-  host: "smtp-mail.outlook.com",
-  port: 587,
-  secure: false,
-  tls: {
-    ciphers: "SSLv3",
-  },
+  host: EMAIL_HOST || "smtp.hostinger.com",
+  port: 465,
+  secure: true,
   auth: {
     user: EMAIL,
     pass: EMAIL_PASS,
@@ -39,6 +37,7 @@ export default async function handler(
 
     await transporter.sendMail({
       ...mailOption,
+      replyTo: email,
       subject: "Portfolio Contact",
       text: `${message}\nfrom ${firstname} ${lastname} with the email ${email}`,
     });
@@ -48,6 +47,8 @@ export default async function handler(
       .json({ success: true, msg: "Email has been sent", status: 200 });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, msg: "Bad request", status: 400 });
+    res
+      .status(500)
+      .json({ success: false, msg: "Email could not be sent", status: 500 });
   }
 }

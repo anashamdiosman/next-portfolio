@@ -1,10 +1,10 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { cn } from "@/utils/cn";
 import { sendContactForm } from "@/lib/api";
 import { AiOutlineLoading } from "react-icons/ai";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { MdDoneOutline } from "react-icons/md";
 import { BiErrorAlt } from "react-icons/bi";
 
@@ -15,40 +15,53 @@ type Data = {
   message: string;
 };
 
+const initialData: Data = {
+  firstname: "",
+  lastname: "",
+  email: "",
+  message: "",
+};
+
+const buttonClassName =
+  "gap-6 inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-transparent bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full disabled:cursor-not-allowed disabled:opacity-70";
+
 function MailForm() {
-  const [data, setData] = useState<Data>({
-    firstname: "",
-    lastname: "",
-    email: "",
-    message: "",
-  });
+  const [data, setData] = useState<Data>(initialData);
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<any>(null);
+  const [sent, setSent] = useState<boolean>(false);
+  const [sentTo, setSentTo] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
 
   const handleSubmitContactForm = async (e: FormEvent) => {
     e.preventDefault();
+    if (loading) return;
 
     setLoading(true);
+    setError(false);
 
     try {
       const res = await sendContactForm(data);
 
-      if (res?.data?.status === 200) {
-        setSuccess(true);
+      if (res?.data?.success) {
+        setSentTo(data.firstname);
+        setData(initialData);
+        setSent(true);
       } else {
-        setSuccess(false);
+        setError(true);
       }
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
-      setSuccess(false);
+      setError(true);
     }
 
-    setTimeout(() => {
-      setSuccess(null);
-    }, 1000);
+    setLoading(false);
   };
+
+  useEffect(() => {
+    if (!error) return;
+    const timer = setTimeout(() => setError(false), 4000);
+    return () => clearTimeout(timer);
+  }, [error]);
 
   const handleChangeTextFeild = (e: ChangeEvent<HTMLInputElement>) => {
     const { target } = e;
@@ -71,9 +84,52 @@ function MailForm() {
   return (
     <div>
       <h4 className="text-2xl text-center mb-6">Let&apos;s get in touch</h4>
-      <form
+      <AnimatePresence mode="wait">
+      {sent ? (
+        <motion.div
+          key="sent"
+          className="p-4 bg-zinc-900 rounded-lg shadow-2xl shadow-indigo-500/20"
+          role="status"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ type: "spring", stiffness: 100 }}
+        >
+          <div className="py-12 flex flex-col items-center text-center gap-4">
+            <motion.div
+              className="flex items-center justify-center h-16 w-16 rounded-full bg-green-500/10 text-green-400 shadow-lg shadow-green-500/20"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200, delay: 0.15 }}
+            >
+              <MdDoneOutline size={28} />
+            </motion.div>
+            <h4 className="text-xl">
+              Thanks{sentTo ? `, ${sentTo}` : ""}! Your message has been sent.
+            </h4>
+            <p className="text-sm text-neutral-400 max-w-sm">
+              I&apos;ll get back to you as soon as possible.
+            </p>
+            <div className="pt-6 w-full">
+              <button
+                className={buttonClassName}
+                type="button"
+                onClick={() => setSent(false)}
+              >
+                Send another message
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      ) : (
+      <motion.form
+        key="form"
         className="p-4 bg-zinc-900 rounded-lg shadow-2xl shadow-indigo-500/20"
         onSubmit={(e) => handleSubmitContactForm(e)}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ type: "spring", stiffness: 100 }}
       >
         <div className="py-6">
           <div className="flex gap-6 mb-6">
@@ -135,9 +191,9 @@ function MailForm() {
           </LabelInputContainer>
           <div className="pt-6">
             <button
-              className="gap-6 inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-transparent bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full"
+              className={buttonClassName}
               type="submit"
-              //   onClick={() => window.open(link, "_blank", "noopener,noreferrer")}
+              disabled={loading}
             >
               {loading ? (
                 <AiOutlineLoading color="#FFF" className="animate-spin" />
@@ -147,37 +203,26 @@ function MailForm() {
             </button>
           </div>
         </div>
-      </form>
-      {/* <motion.div
-        animate={{ x: 100 }}
-        transition={{ type: "spring", stiffness: 100 }}
-      > */}
-      {success != null ? (
-        success ? (
-          <motion.div
-            className="fixed bottom-10 left-0 flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 gap-2"
-            role="alert"
-            animate={{ x: 20 }}
-            transition={{ type: "spring", stiffness: 100 }}
-          >
-            <MdDoneOutline />
-            <h4 className="text-sm">Email has been sent!</h4>
-          </motion.div>
-        ) : (
+      </motion.form>
+      )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {error && (
           <motion.div
             className="fixed bottom-10 left-0 flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 gap-2"
             role="alert"
-            animate={{ x: 20 }}
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 20, opacity: 1 }}
+            exit={{ x: -100, opacity: 0 }}
             transition={{ type: "spring", stiffness: 100 }}
           >
             <BiErrorAlt />
-            <h4 className="text-sm">Email could not be sent!</h4>
+            <h4 className="text-sm">
+              Email could not be sent! Please try again.
+            </h4>
           </motion.div>
-        )
-      ) : (
-        ""
-      )}
-      {/* </motion.div> */}
+        )}
+      </AnimatePresence>
     </div>
   );
 }
